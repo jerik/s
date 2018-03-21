@@ -1,4 +1,53 @@
 #!/usr/bin/env bash
+# Autor:    J. Erik Heinz 
 
 set -o nounset
 set -o errexit
+
+function usage() {
+echo -e "Usage: $(basename $0) [-h|--help]
+    -h|--help    Show this menu.
+"
+}
+
+while getopts "a:h-" options; do
+#        a) a=$OPTARG;;
+    case $options in 
+        h) usage; exit 1;;
+        *) usage; exit 1;;
+    esac
+done
+
+# Normal log: writeLog 0 message to show
+#  Error log: writeLog E message to show
+function writeLog() {
+    msgType="Info - "
+    if test "$1" != "0"; then
+        msgType="Error - "
+    fi
+    shift
+    logMsg="$\(basename $0\): $msgType $@"
+    logger $logMsg
+    echo $logMsg
+}
+
+OS=$(uname -s)
+# Linux / Darwin = Apple
+if test $OS != "Darwin"; then
+    echo -n OS: $OS. 
+    echo "Program designed for Darwin; Will Quit."
+    exit
+fi
+
+echo -e "Bare script: EDIT THIS FILE $0" # remove this line. 
+
+# Test if a folder exists
+# test -d "/path/to/folder" && echo exists || echo does not exists
+# Test if a variable is set
+## https://stackoverflow.com/a/13864829/1933185
+# if [ -z ${var+x} ]; then echo "var is unset"; else echo "var is set to ''"; fi
+# Test if a variable is set to a non-null value
+# if [ -n "" ]
+## https://stackoverflow.com/a/3601734/1933185
+
+
