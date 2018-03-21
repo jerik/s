@@ -57,6 +57,18 @@ __s_do() {
   popd &> /dev/null
 }
 
+# jerik 20180321 
+# List files with description
+__s_list_description() { 
+	cd "$1"
+	#for file in $(ls -- "$1"); do 
+	for file in $(ls --); do 
+		echo -n "${file} ~ "
+		description=$(sed -n -e 2p $file)
+		echo ${description:2}
+	done
+}
+
 # Lists files at path or prints path
 __s_list() {
   # Print if not a terminal
@@ -66,7 +78,11 @@ __s_list() {
   fi
 
   err 'Available %s:' "$2"
-  ls -- "$1"
+  if test "$2" == "scripts"; then 
+	  __s_list_description "$1"
+  else
+  	ls -- "$1"
+  fi
 }
 
 # Opens a file at path or prints path
