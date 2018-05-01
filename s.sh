@@ -80,6 +80,11 @@ __s_list() {
   err 'Available %s:' "$2"
   if test "$2" == "scripts"; then 
 	  __s_list_description "$1"
+	  # show old bin scripts description if available
+	  so_cmd=$(which so)
+	  if test -f ${so_cmd}; then 
+		  $so_cmd
+	  fi
   else
   	ls -- "$1"
   fi
