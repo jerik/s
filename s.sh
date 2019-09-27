@@ -82,7 +82,7 @@ __s_list() {
 	  __s_list_description "$1"
 	  # jerik 20180501 
 	  # show old bin scripts description if available
-	  so_cmd=$(which so)
+	  so_cmd=$(which so.py)
 	  if test -f ${so_cmd}; then 
 		  $so_cmd
 	  fi
